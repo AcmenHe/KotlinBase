@@ -1,8 +1,7 @@
-package com.rkyyn.diarybook.utils
+package com.rkyyn.libnetwork.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rkyyn.libnetwork.common.ExceptionUtil
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
