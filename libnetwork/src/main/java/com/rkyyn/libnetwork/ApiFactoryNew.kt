@@ -158,10 +158,23 @@ object ApiFactoryNew {
             return gson.fromJson(bodyString, resultClass)
         } catch (e: Exception) {
             e.printStackTrace()
-            LogUtils.e(e.message)
+            LogUtils.e("请求出错：code="+originalResponse.code+",message="+originalResponse.message+",error="+e.message)
 //                    e.message?.let { ToastUtils.showToast(it) }
             BaseApplication.dismissLoadingDialog()
-            return null
+            return object : BaseResult(){
+                override fun getResultCode(): Int {
+                    return originalResponse.code
+                }
+
+                override fun getResultMessage(): String? {
+                    return originalResponse.message
+                }
+
+                override fun isSuccess(): Boolean {
+                    return false
+                }
+
+            }
         }
     }
 }
