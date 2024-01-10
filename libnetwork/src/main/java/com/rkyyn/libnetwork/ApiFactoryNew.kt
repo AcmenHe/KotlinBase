@@ -138,12 +138,25 @@ object ApiFactoryNew {
         resultClass: Class<out BaseResult>?
     ): BaseResult? {
         if (resultClass == null) return null
-//        if(!originalResponse.isSuccessful){
-//            LogUtils.e("网络请求出错："+originalResponse.code.toString()+","+originalResponse.message)
-//            BaseApplication.dismissLoadingDialog()
-//            return null
-//        }
         try {
+            if(!originalResponse.isSuccessful){
+                LogUtils.e("网络请求出错："+originalResponse.code.toString()+","+originalResponse.message)
+                BaseApplication.dismissLoadingDialog()
+                return object : BaseResult(){
+                    override fun getResultCode(): Int {
+                        return originalResponse.code
+                    }
+
+                    override fun getResultMessage(): String? {
+                        return originalResponse.message
+                    }
+
+                    override fun isSuccess(): Boolean {
+                        return false
+                    }
+
+                }
+            }
             val responseBody = originalResponse.body
             val source = responseBody!!.source()
             source.request(Long.MAX_VALUE)
