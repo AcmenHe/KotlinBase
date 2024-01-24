@@ -35,7 +35,7 @@ afterEvaluate {
             release(MavenPublication){
                 groupId = "com.github.AcmenHe"
                 artifactId = "libnetwork"
-                version = "v1.0.4"
+                version = "v1.0.5"
                 from(components["release"])
             }
 //            register<MavenPublication>("release") { // 注册一个名字为 release 的发布内容

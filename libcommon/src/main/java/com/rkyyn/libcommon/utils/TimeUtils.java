@@ -25,7 +25,7 @@ import java.util.Date;
  */
 public class TimeUtils {
 
-    interface PickTimeListener{
+    public interface PickTimeListener{
         void onTimeSet(String time);
     }
     /**
