@@ -24,10 +24,14 @@ import java.util.Date;
  * desc   :
  */
 public class TimeUtils {
+
+    interface PickTimeListener{
+        void onTimeSet(String time);
+    }
     /**
      * 日期时间选择
      */
-    public static void showDatePick(Context mContext, final TextView timeText) {
+    public static void showDatePick(Context mContext, final PickTimeListener timeListener) {
         try {
             final StringBuffer time = new StringBuffer();
             //获取Calendar对象，用于获取当前时间
@@ -44,7 +48,8 @@ public class TimeUtils {
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                     //因为monthOfYear会比实际月份少一月所以这边要加1
                     time.append(year + "-" + String.format("%02d", (monthOfYear + 1)) + "-" + String.format("%02d", dayOfMonth));
-                    timeText.setText(time);
+//                    timeText.setText(time);
+                    timeListener.onTimeSet(time.toString());
                 }
             }, year, month, day);
             //弹出选择日期对话框
@@ -56,7 +61,7 @@ public class TimeUtils {
     /**
      * 日期时间选择
      */
-    public static void showDateTimePick(Context mContext,final TextView timeText) {
+    public static void showDateTimePick(Context mContext, final PickTimeListener timeListener) {
         try {
             final StringBuffer time = new StringBuffer();
             //获取Calendar对象，用于获取当前时间
@@ -74,7 +79,7 @@ public class TimeUtils {
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     time.append(" " + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
                     //设置TextView显示最终选择的时间
-                    timeText.setText(time);
+                    timeListener.onTimeSet(time.toString());
                 }
             }, hour, minute, true);
             //实例化DatePickerDialog对象
