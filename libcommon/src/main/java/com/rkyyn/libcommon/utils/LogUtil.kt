@@ -116,7 +116,11 @@ object LogUtil {
     @JvmStatic
     fun i(tag: String?, msg: String?,writeFile:Boolean? = null) {
         if (isPrint()) {
-            Log.i(tag, msg!!)
+            if (msg != null) {
+                Log.i(tag, msg)
+            }else{
+                Log.i(tag, "null")
+            }
             if((isWriteFile ?: writeFile) == true) writeLog("$tag:$msg")
         }
     }
@@ -124,7 +128,11 @@ object LogUtil {
     @JvmStatic
     fun d(tag: String?, msg: String?,writeFile:Boolean? = null) {
         if (isPrint()){
-            Log.d(tag, msg!!)
+            if (msg != null) {
+                Log.d(tag, msg)
+            }else{
+                Log.d(tag, "null")
+            }
             if((isWriteFile ?: writeFile) == true) writeLog("$tag:$msg")
         }
     }
@@ -132,7 +140,11 @@ object LogUtil {
     @JvmStatic
     fun e(tag: String?, msg: String?,writeFile:Boolean? = null) {
         if (isPrint()){
-            Log.e(tag, msg!!)
+            if (msg != null) {
+                Log.e(tag, msg)
+            }else{
+                Log.e(tag, "null")
+            }
             if((isWriteFile ?: writeFile) == true) writeLog("$tag:$msg")
         }
     }
@@ -140,7 +152,11 @@ object LogUtil {
     @JvmStatic
     fun v(tag: String?, msg: String?,writeFile:Boolean? = null) {
         if (isPrint()){
-            Log.v(tag, msg!!)
+            if (msg != null) {
+                Log.v(tag, msg)
+            }else{
+                Log.v(tag, "null")
+            }
             if((isWriteFile ?: writeFile) == true) writeLog("$tag:$msg")
         }
     }
