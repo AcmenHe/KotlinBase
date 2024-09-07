@@ -21,7 +21,7 @@ object AppManager  {
 //        }
 //
 //    }
-    // 弱引用
+
     private var sCurrentActivityWeakRef: WeakReference<Activity>? = null
 
     fun getCurrentActivity(): Activity?{
