@@ -39,12 +39,15 @@ object ApiFactoryNew {
     fun <T> createService(
         baseUrl: String,
         apiClass: Class<T>,
-        apiConfig: ApiConfig? = null
+        apiConfig: ApiConfig? = null,
+        isUseCache: Boolean = true
     ): T {
         //url是否存在缓存
         val indexOfValue = urls.indexOfValue(baseUrl)
         val retrofit =
-            if (apiConfig?.getHeader() != customHeaders) {//请求头不相同
+            if(!isUseCache){
+                getRetrofit(baseUrl, apiConfig)
+            }else if (apiConfig?.getHeader() != customHeaders) {//请求头不相同
                 if (indexOfValue >= 0) {
                     //清除之前保存的url请求
                     urls.remove(indexOfValue)
