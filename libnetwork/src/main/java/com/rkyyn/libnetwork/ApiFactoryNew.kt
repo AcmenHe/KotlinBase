@@ -39,29 +39,30 @@ object ApiFactoryNew {
     fun <T> createService(
         baseUrl: String,
         apiClass: Class<T>,
-        apiConfig: ApiConfig? = null,
-        isUseCache: Boolean = true
+        apiConfig: ApiConfig?,
     ): T {
-        //url是否存在缓存
-        val indexOfValue = urls.indexOfValue(baseUrl)
         val retrofit =
-            if(!isUseCache){
+            if(apiConfig?.useCache()==false){//不使用缓存
                 getRetrofit(baseUrl, apiConfig)
-            }else if (apiConfig?.getHeader() != customHeaders) {//请求头不相同
-                if (indexOfValue >= 0) {
-                    //清除之前保存的url请求
-                    urls.remove(indexOfValue)
-                    retrofits.remove(indexOfValue)
+            }else {
+                //url是否存在缓存
+                val indexOfValue = urls.indexOfValue(baseUrl)
+                if (apiConfig?.getHeader() != customHeaders) {//请求头不相同
+                    if (indexOfValue >= 0) {
+                        //清除之前保存的url请求
+                        urls.remove(indexOfValue)
+                        retrofits.remove(indexOfValue)
+                    }
+                    customHeaders = apiConfig?.getHeader()
+                    //重新获取retrofit
+                    getRetrofit(baseUrl, apiConfig)
+                } else if (indexOfValue >= 0) {
+                    //内存中存在直接取出来使用
+                    retrofits.get(indexOfValue)
+                } else {
+                    //内存中没有则重新获取
+                    getRetrofit(baseUrl, apiConfig)
                 }
-                customHeaders = apiConfig?.getHeader()
-                //重新获取retrofit
-                getRetrofit(baseUrl, apiConfig)
-            } else if (indexOfValue >= 0) {
-                //内存中存在直接取出来使用
-                retrofits.get(indexOfValue)
-            } else {
-                //内存中没有则重新获取
-                getRetrofit(baseUrl, apiConfig)
             }
         return retrofit.create(apiClass)
     }
@@ -80,9 +81,12 @@ object ApiFactoryNew {
                 }
             )
             val build = build()
-            val index = urls.size()
-            urls.append(index, baseUrl)
-            retrofits.append(index, build)
+            //apiConfig为空，默认使用缓存
+            if(apiConfig == null || apiConfig.useCache()) {
+                val index = urls.size()
+                urls.append(index, baseUrl)
+                retrofits.append(index, build)
+            }
             build
         }
 

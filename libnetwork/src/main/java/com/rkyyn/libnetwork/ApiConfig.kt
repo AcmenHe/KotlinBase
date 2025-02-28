@@ -33,4 +33,9 @@ open class ApiConfig {
         return null
     }
 
+    /**
+     * 是否使用缓存
+     */
+    open fun useCache(): Boolean = true
+
 }

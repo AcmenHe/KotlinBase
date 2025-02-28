@@ -102,15 +102,15 @@ object LogUtil {
     }
     @JvmStatic
     fun d(tag: String?, msg: String?) {
-        i(tag, msg,null)
+        d(tag, msg,null)
     }
     @JvmStatic
     fun e(tag: String?, msg: String?) {
-        i(tag, msg,null)
+        e(tag, msg,null)
     }
     @JvmStatic
     fun v(tag: String?, msg: String?) {
-        i(tag, msg,null)
+        v(tag, msg,null)
     }
     // 下面是传入自定义tag的函数
     @JvmStatic
