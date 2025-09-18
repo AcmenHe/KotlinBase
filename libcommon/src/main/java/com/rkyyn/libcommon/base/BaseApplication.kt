@@ -2,7 +2,6 @@ package com.rkyyn.libcommon.base
 
 import android.app.Application
 import com.blankj.utilcode.util.Utils
-import com.tencent.mmkv.MMKV
 
 /**
  *  author : hepeng
@@ -27,7 +26,6 @@ open class BaseApplication : Application() {
         instance = this
         super.onCreate()
         Utils.init(this)
-        MMKV.initialize(this)
     }
 
 
